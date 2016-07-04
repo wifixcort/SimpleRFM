@@ -1,0 +1,34 @@
+#######################################
+# Syntax Coloring Map For SimpleRFM
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+SimpleRFM	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+moteino_receive		KEYWORD2
+moteino_send		KEYWORD2
+moteino_sleep		KEYWORD2
+moteino_id_receive	KEYWORD2
+moteino_id			KEYWORD2
+moteino_rssi		KEYWORD2
+
+#######################################
+# Instances (KEYWORD2)
+#######################################
+
+
+#######################################
+# Constants (LITERAL1)
+ONE_WIRE_BUS	LITERAL1
+LED			LITERAL1
+FLASH_SS	LITERAL1
+DELAY		LITERAL1
+
+#######################################
