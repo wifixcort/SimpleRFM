@@ -1,9 +1,9 @@
 /*
-Standart Gateway Trasmition Network v.2
+ Standart Node Trasmition
 
-Ricardo Mena C
-ricardo@crcibernetica.com
-http://crcibernetica.com
+ Ricardo Mena C
+ ricardo@crcibernetica.com
+ http://crcibernetica.com
 
  License
  **********************************************************************************
@@ -35,24 +35,29 @@ http://crcibernetica.com
 
 #define SERIAL_BAUD   115200
 
-uint8_t node_id = 1;      //This node id
-//uint8_t network = 199;    //Network Indentification
-SimpleRFM radio2;          //SimpleRFM definition
-String msg = "";          //Received packets
+uint8_t node_id = 8;      //This node id
+uint8_t radio2_id = 1;    //The server ID
+//uint8_t network = 199;  //Network Indentification
+SimpleRFM radio1;         //SimpleRFM definition
+String message = "";      //Packet to send
 
 void setup() {
 //Default parameters in order
 //uint8_t server_id, uint8_t network, const char encryptKey, boolean LowPower/HighPower, Frecuency
-  radio2.initialize(node_id);
+  radio1.initialize(node_id);
   Serial.begin(SERIAL_BAUD);
-  Serial.println(F("This is your server"));
-  Serial.println(F("-------------------\n"));
+  Serial.println("This is your client");
+  Serial.println("--------------------\n");
 }//end setup
 
-void loop(){
-  radio2.SimpleRFM_receive(msg);
-  if(msg != ""){//Check if msg is empty
-	Serial.println(msg);//Print message received
+void loop() {
+  message = "HELLO SERVER!!!";
+  //Parameter to send messages
+  //server ID, message, length, maximum retrie wait time, maximum retries
+  if(radio1.send(radio2_id, message)){
+	Serial.println("Packet delivered!");
+  }else{
+	Serial.println("Packet not receive");
   }//end if
-  Serial.flush();
-}//end loop
+  delay(1000);
+}//loop

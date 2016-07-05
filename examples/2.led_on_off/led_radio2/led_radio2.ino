@@ -1,9 +1,9 @@
 /*
-Standart Gateway Trasmition Network v.2
+ Standart Gateway Trasmition
 
-Ricardo Mena C
-ricardo@crcibernetica.com
-http://crcibernetica.com
+ Ricardo Mena C
+ ricardo@crcibernetica.com
+ http://crcibernetica.com
 
  License
  **********************************************************************************
@@ -31,33 +31,29 @@ http://crcibernetica.com
  **********************************************************************************
 */
 
-#include <Moteino.h>
-//-----Need to be declared to get  Moteino working------------
-#include <RFM69.h>  //https://github.com/LowPowerLab/RFM69
-#include <SPI.h>
-//------------------------------------------------------------
+#include <SimpleRFM.h>
 
-#define FREQUENCY     RF69_915MHZ
-#define ENCRYPTKEY    "sampleEncryptKey"
 #define SERIAL_BAUD   115200
-#define LED     10
+#define LED     10        //Use pin 13 if you use Feather
 
-Moteino *server;          //Moteino definition
 uint8_t node_id = 1;      //This node id
-uint8_t network = 199;    //Network Indentification
+//uint8_t network = 199;  //Network Indentification
+SimpleRFM radio2;         //SimpleRFM definition
 String msg = "";          //Received packets
 
 void setup() {
   pinMode(LED, OUTPUT);
   digitalWrite(LED, LOW);
-  server  = new Moteino(node_id, FREQUENCY, ENCRYPTKEY, network, false);//node#, freq, encryptKey, network, LowPower/HighPower(false/true)
+//Default parameters in order
+//uint8_t server_id, uint8_t network, const char encryptKey, boolean LowPower/HighPower, Frecuency
+  radio2.initialize(node_id);
   Serial.begin(SERIAL_BAUD);
   Serial.println(F("This is your server"));
   Serial.println(F("-------------------\n"));
 }//end setup
 
 void loop(){
-  server->moteino_receive(msg);
+  radio2.receive(msg);
   if(msg != ""){//Check if msg is empty
 	Serial.println(msg);//Print message received
   }//end if

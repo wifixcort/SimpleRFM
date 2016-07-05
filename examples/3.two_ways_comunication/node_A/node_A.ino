@@ -1,13 +1,13 @@
 /*
-  Standart Node Trasmition Network v.2
+ Standart Node Trasmition
 
-  Ricardo Mena C
-  ricardo@crcibernetica.com
-  http://crcibernetica.com
+ Ricardo Mena C
+ ricardo@crcibernetica.com
+ http://crcibernetica.com
 
-  In this example we only have two nodes involved,
-  here we send a messege to our partner and check
-  if he respond us
+ In this example we only have two nodes involved,
+ here we send a messege to our partner and check
+ if he respond us
 
  License
  **********************************************************************************
@@ -35,41 +35,36 @@
  **********************************************************************************
 */
 
-#include <Moteino.h>
-//-----Need to be declared to get  Moteino working------------
-#include <RFM69.h> //https://github.com/LowPowerLab/RFM69
-#include <SPI.h>
-//------------------------------------------------------------
+#include <SimpleRFM.h>
 
-#define FREQUENCY     RF69_915MHZ
-#define ENCRYPTKEY    "sampleEncryptKey"
 #define SERIAL_BAUD   115200
 
-Moteino *node_a;          //Moteino definition
 uint8_t node_id = 8;      //This node id
-uint8_t node_b_id = 1;
-uint8_t network = 199;    //Network Indentification
-String pck = "";          //Packet to send
+uint8_t radio2_id = 1;    //The server ID
+//uint8_t network = 199;  //Network Indentification
+SimpleRFM radio1;         //SimpleRFM definition
+String message = "";      //Packet to send
 String msg = "";          //Received packets
 
 void setup() {
-  // put your setup code here, to run once:
-  node_a  = new Moteino(node_id, FREQUENCY, ENCRYPTKEY, network, false);//node#, freq, encryptKey, network, LowPower/HighPower(false/true)
+//Default parameters in order
+//uint8_t server_id, uint8_t network, const char encryptKey, boolean LowPower/HighPower, Frecuency
+  radio1.initialize(node_id);
   Serial.begin(SERIAL_BAUD);
-  Serial.println(F("This is your client"));
-  Serial.println(F("--------------------\n"));
+  Serial.println("This is your client");
+  Serial.println("--------------------\n");
 }//end setup
 
 void loop() {
-  node_a->moteino_receive(msg);
+  node_a.receive(msg);//Save received messages
   if(msg != ""){//Check if msg is empty
 	Serial.println(msg);//Print message received
   }//end if
 
-  pck = "HELLO NODE B!!!";
+  message = "HELLO NODE B!!!";
   //Parameter to send messages
   //node ID, message, length, maximum retries, maximum retrie wait time
-  if(node_a->moteino_send(node_b_id, pck.c_str(), pck.length(), 2, 200)){
+  if(node_a.send(node_b_id, message)){
 	  Serial.println(F("Packet delivered!"));
   }else{
 	  Serial.println(F("Packet not receive"));

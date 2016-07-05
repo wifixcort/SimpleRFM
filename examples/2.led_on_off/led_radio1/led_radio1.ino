@@ -1,9 +1,9 @@
 /*
-Standart Node Trasmition Network v.2
+ Standart Node Trasmition
 
-Ricardo Mena C
-ricardo@crcibernetica.com
-http://crcibernetica.com
+ Ricardo Mena C
+ ricardo@crcibernetica.com
+ http://crcibernetica.com
 
  License
  **********************************************************************************
@@ -34,30 +34,36 @@ http://crcibernetica.com
 #include <SimpleRFM.h>
 
 #define SERIAL_BAUD   115200
+#define PUSH_BUTTON   5
 
 uint8_t node_id = 8;      //This node id
-uint8_t server_id = 1;    //The server ID
-//uint8_t network = 199;    //Network Indentification
-SimpleRFM radio1;          //SimpleRFM definition
-String pck = "";          //Packet to send
+uint8_t radio2_id = 1;    //The server ID
+//uint8_t network = 199;  //Network Indentification
+SimpleRFM radio1;         //SimpleRFM definition
+String message = "";          //Packet to send
 
 void setup() {
+  pinMode(PUSH_BUTTON, INPUT_PULLUP);//Use a push button on pin 5
 //Default parameters in order
 //uint8_t server_id, uint8_t network, const char encryptKey, boolean LowPower/HighPower, Frecuency
   radio1.initialize(node_id);
   Serial.begin(SERIAL_BAUD);
-  Serial.println("This is your client");
-  Serial.println("--------------------\n");
+  Serial.println(F("This is your client"));
+  Serial.println(F("--------------------\n"));
 }//end setup
 
 void loop() {
-  pck = "HELLO SERVER!!!";
-  //Parameter to send messages
-  //server ID, message, length, maximum retrie wait time, maximum retries
-  if(radio1.SimpleRFM_send(server_id, pck)){
-	  Serial.println("Packet delivered!");
+  if(digitaRead(PUSH_BUTTON) == HIGH){
+	message = "LED ON";
   }else{
-	  Serial.println("Packet not receive");
+	message = "LED OFF";
+  }//end if
+  //Parameter to send messages
+  //server ID, message, length, maximum retries, maximum retrie wait time
+  if(radio1.send(radio2_id, message)){
+	  Serial.println(F("Packet delivered!"));
+  }else{
+	  Serial.println(F("Packet not receive"));
   }//end if
   delay(1000);
 }//loop

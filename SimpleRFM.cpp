@@ -33,9 +33,14 @@
 
 #include "SimpleRFM.h"
 
-
-SimpleRFM::SimpleRFM(){
-
+SimpleRFM::SimpleRFM(uint8_t slaveSelectPin, uint8_t interruptPin, bool isRFM69HW, uint8_t interruptNum){     
+  RFM69::_slaveSelectPin = slaveSelectPin;
+  RFM69::_interruptPin = interruptPin;
+  RFM69::_interruptNum = interruptNum;
+  RFM69::_mode = RF69_MODE_STANDBY;
+  RFM69::_promiscuousMode = false;
+  RFM69::_powerLevel = 31;
+  RFM69::_isRFM69HW = isRFM69HW;
 }//end SimpleRFM
 
 bool SimpleRFM::initialize(uint8_t node_Id, uint8_t netw_id, const char *encryptK, boolean mote_type, uint8_t frequency){
@@ -45,17 +50,17 @@ bool SimpleRFM::initialize(uint8_t node_Id, uint8_t netw_id, const char *encrypt
   }//end if
   RFM69::encrypt(encryptK);//(const char*)
   return radio;
-}
+}//end initialize
 
 SimpleRFM::~SimpleRFM(){
 //  delete(this);
 }//end SimpleRFM
 
-boolean SimpleRFM::SimpleRFM_receive(String &msg){
+boolean SimpleRFM::receive(String &msg){
   msg = "";//Delete old string
   if (RFM69::receiveDone()){
 	node_id_receive = RFM69::SENDERID;//Save node id
-	rssi = RFM69::RSSI;//Save node rssi
+	_rssi = RFM69::RSSI;//Save node rssi
 	for(uint8_t i = 0; i < RFM69::DATALEN; i++){
 	  msg += (char)RFM69::DATA[i];//This is the data
 	}//end for
@@ -68,7 +73,7 @@ boolean SimpleRFM::SimpleRFM_receive(String &msg){
   return false;
 }//end SimpleRFM_receive
 
-boolean SimpleRFM::SimpleRFM_send(uint8_t &gateway, String s_buffer, uint8_t retryWaitTime, uint8_t retries){//retrines default 2, retriesWait default 40
+boolean SimpleRFM::send(uint8_t &gateway, String s_buffer, uint8_t retryWaitTime, uint8_t retries){//retrines default 2, retriesWait default 40
   
   if (RFM69::sendWithRetry(gateway, s_buffer.c_str(), s_buffer.length(), retries, retryWaitTime)){
 	alert(3);
@@ -78,11 +83,11 @@ boolean SimpleRFM::SimpleRFM_send(uint8_t &gateway, String s_buffer, uint8_t ret
   }//end if
 }//end SimpleRFM_send
 
-uint8_t SimpleRFM::SimpleRFM_id_receive(){
+uint8_t SimpleRFM::id_receive(){
   return node_id_receive;
 }//end SimpleRFM_id_receive
 
-void SimpleRFM::SimpleRFM_sleep(){
+void SimpleRFM::sleep(){
 RFM69::sleep();
 }//end mote_sleep
 
@@ -94,6 +99,6 @@ void SimpleRFM::alert(uint8_t t_delay){
   digitalWrite(LED,LOW);
 }//end alert_incomming
 
-int SimpleRFM::SimpleRFM_rssi(){
-    return rssi;
+int SimpleRFM::rssi(){
+    return this->_rssi;
 }//end SimpleRFM_rssi
