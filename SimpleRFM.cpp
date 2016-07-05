@@ -53,7 +53,7 @@ bool SimpleRFM::initialize(uint8_t node_Id, uint8_t netw_id, const char *encrypt
 }//end initialize
 
 SimpleRFM::~SimpleRFM(){
-//  delete(this);
+  delete(this);
 }//end SimpleRFM
 
 boolean SimpleRFM::receive(String &msg){
@@ -71,7 +71,7 @@ boolean SimpleRFM::receive(String &msg){
 	return true;
   }//end if
   return false;
-}//end SimpleRFM_receive
+}//end receive
 
 boolean SimpleRFM::send(uint8_t &gateway, String s_buffer, uint8_t retryWaitTime, uint8_t retries){//retrines default 2, retriesWait default 40
   
@@ -81,15 +81,15 @@ boolean SimpleRFM::send(uint8_t &gateway, String s_buffer, uint8_t retryWaitTime
   }else{
 	return false;//nothing!
   }//end if
-}//end SimpleRFM_send
+}//end send
 
 uint8_t SimpleRFM::id_receive(){
   return node_id_receive;
-}//end SimpleRFM_id_receive
+}//end id_receive
 
 void SimpleRFM::sleep(){
-RFM69::sleep();
-}//end mote_sleep
+  RFM69::sleep();
+}//end sleep
 
 
 void SimpleRFM::alert(uint8_t t_delay){

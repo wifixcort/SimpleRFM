@@ -36,53 +36,53 @@
 
 #include <Arduino.h>
 #include <RFM69.h>    //https://www.github.com/lowpowerlab/rfm69
-//#include "RFM69.h"   //https://www.github.com/lowpowerlab/rfm69
 #include <SPI.h>
 
 #define RF69_SPI_CS             SS 
 
 #if defined(__AVR_ATmega168__) || defined(__AVR_ATmega328P__) || defined(__AVR_ATmega88) || defined(__AVR_ATmega8__) || defined(__AVR_ATmega88__)
-  #define RF69_IRQ_PIN          2
-  #define RF69_IRQ_NUM          0
+ #define RF69_IRQ_PIN          2
+ #define RF69_IRQ_NUM          0
+ #define LED           13   //Moteinos have LEDs on D9
+ #define FLASH_SS      8  //and FLASH SS on D8
 #elif defined(__AVR_ATmega644P__) || defined(__AVR_ATmega1284P__)
-  #define RF69_IRQ_PIN          2
-  #define RF69_IRQ_NUM          2
-#elif defined(__AVR_ATmega32U4__)
-  #define RF69_IRQ_PIN          3
-  #define RF69_IRQ_NUM          0
+ #define RF69_IRQ_PIN          2
+ #define RF69_IRQ_NUM          2
+ #elif defined(__AVR_ATmega32U4__)
+ #define RF69_IRQ_PIN          3
+ #define RF69_IRQ_NUM          0
 #elif defined(__arm__)
-  #define RF69_IRQ_PIN          10
-  #define RF69_IRQ_NUM          10
-  #define LED           13 // SimpleRFMs have LEDs on D9
-  #define FLASH_SS      8 // and FLASH SS on D8
+ #define RF69_IRQ_PIN          10
+ #define RF69_IRQ_NUM          10
+ #define LED           13  //Moteinos have LEDs on D9
+#define FLASH_SS      8    //and FLASH SS on D8
 #else 
-  #define RF69_IRQ_PIN          2
-  #define RF69_IRQ_NUM          0
-  #define LED           9 // SimpleRFMs have LEDs on D9
-  #define FLASH_SS      8 // and FLASH SS on D8
+ #define RF69_IRQ_PIN          2
+ #define RF69_IRQ_NUM          0
+ #define LED           9  //Moteinos have LEDs on D9
+ #define FLASH_SS      8  //and FLASH SS on D8
 #endif
 
-
 #ifdef __AVR_ATmega1284P__
-  #define LED           15 // Moteino MEGAs have LEDs on D15
-  #define FLASH_SS      23 // and FLASH SS on D23
+#define LED           15 // Moteino MEGAs have LEDs on D15
+#define FLASH_SS      23 // and FLASH SS on D23
 #endif
 
 class SimpleRFM: public RFM69{// //RFM69::
-  private:
-	uint8_t node_id_receive;
-	int8_t _rssi;
-	RFM69 radio;
-	void alert(uint8_t t_delay);
-  public:
-	//    SimpleRFM(){};//Empty constructor
-		virtual ~SimpleRFM();
-		SimpleRFM(uint8_t slaveSelectPin=RF69_SPI_CS, uint8_t interruptPin=RF69_IRQ_PIN, bool isRFM69HW=false, uint8_t interruptNum=RF69_IRQ_NUM);
-		bool initialize(uint8_t node_Id, uint8_t netw_id = 100, const char *encryptK = "sampleEncryptKey", boolean mote_type=false, uint8_t frequency = RF69_915MHZ);
-	boolean receive(String &msg);
-	boolean send(uint8_t &gateway, String s_buffer, uint8_t retryWaitTime=200, uint8_t retries=2);// const void* buffe
-	void sleep();
-   uint8_t id_receive();
-   int rssi();
+ private:
+  uint8_t node_id_receive;
+  int8_t _rssi;
+  RFM69 radio;
+  void alert(uint8_t t_delay);
+ public:
+  //    SimpleRFM(){};//Empty constructor
+  virtual ~SimpleRFM();
+  SimpleRFM(uint8_t slaveSelectPin=RF69_SPI_CS, uint8_t interruptPin=RF69_IRQ_PIN, bool isRFM69HW=false, uint8_t interruptNum=RF69_IRQ_NUM);
+  bool initialize(uint8_t node_Id, uint8_t netw_id = 100, const char *encryptK = "sampleEncryptKey", boolean mote_type=false, uint8_t frequency = RF69_915MHZ);
+  boolean receive(String &msg);
+  boolean send(uint8_t &gateway, String s_buffer, uint8_t retryWaitTime=200, uint8_t retries=2);// const void* buffe
+  void sleep();
+  uint8_t id_receive();
+  int rssi();
 };
 #endif /* #ifndef __SimpleRFM_H__ */

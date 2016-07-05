@@ -36,17 +36,17 @@
 #define SERIAL_BAUD   115200
 #define PUSH_BUTTON   5
 
-uint8_t node_id = 8;      //This node id
-uint8_t radio2_id = 1;    //The server ID
+uint8_t radio1_id = 1;      //This node id
+uint8_t radio2_id = 2;    //The server ID
 //uint8_t network = 199;  //Network Indentification
 SimpleRFM radio1;         //SimpleRFM definition
 String message = "";          //Packet to send
 
 void setup() {
   pinMode(PUSH_BUTTON, INPUT_PULLUP);//Use a push button on pin 5
-//Default parameters in order
-//uint8_t server_id, uint8_t network, const char encryptKey, boolean LowPower/HighPower, Frecuency
-  radio1.initialize(node_id);
+  //Default parameters in order
+  //uint8_t server_id, uint8_t network, const char encryptKey, boolean LowPower/HighPower, Frecuency
+  radio1.initialize(radio1_id);
   Serial.begin(SERIAL_BAUD);
   Serial.println(F("This is your client"));
   Serial.println(F("--------------------\n"));
@@ -61,9 +61,9 @@ void loop() {
   //Parameter to send messages
   //server ID, message, length, maximum retries, maximum retrie wait time
   if(radio1.send(radio2_id, message)){
-	  Serial.println(F("Packet delivered!"));
+	Serial.println(F("Packet delivered!"));
   }else{
-	  Serial.println(F("Packet not receive"));
+	Serial.println(F("Packet not receive"));
   }//end if
   delay(1000);
 }//loop

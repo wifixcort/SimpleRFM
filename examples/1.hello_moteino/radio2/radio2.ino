@@ -35,17 +35,17 @@
 
 #define SERIAL_BAUD   115200
 
-uint8_t node_id = 1;      //This node id
+uint8_t radio2_id = 2;      //This node id
 //uint8_t network = 199;  //Network Indentification
 SimpleRFM radio2;         //SimpleRFM definition
 String msg = "";          //Received packets
 
 void setup() {
-//Default parameters in order
-//uint8_t server_id, uint8_t network, const char encryptKey, boolean LowPower/HighPower, Frecuency
-  radio2.initialize(node_id);
+  //Default parameters in order
+  //uint8_t server_id, uint8_t network, const char encryptKey, boolean LowPower/HighPower, Frecuency
+  radio2.initialize(radio2_id);
   Serial.begin(SERIAL_BAUD);
-  Serial.println(F("This is your server"));
+  Serial.println(F("This is your radio 2"));
   Serial.println(F("-------------------\n"));
 }//end setup
 

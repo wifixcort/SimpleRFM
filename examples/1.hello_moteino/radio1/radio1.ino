@@ -35,25 +35,25 @@
 
 #define SERIAL_BAUD   115200
 
-uint8_t node_id = 8;      //This node id
-uint8_t radio2_id = 1;    //The server ID
+uint8_t radio1_id = 1;      //This node id
+uint8_t radio2_id = 2;    //The server ID
 //uint8_t network = 199;  //Network Indentification
 SimpleRFM radio1;         //SimpleRFM definition
 String message = "";      //Packet to send
 
 void setup() {
-//Default parameters in order
-//uint8_t server_id, uint8_t network, const char encryptKey, boolean LowPower/HighPower, Frecuency
-  radio1.initialize(node_id);
+  //Default parameters in order
+  //uint8_t server_id, uint8_t network, const char encryptKey, boolean LowPower/HighPower, Frecuency
+  radio1.initialize(radio1_id);
   Serial.begin(SERIAL_BAUD);
-  Serial.println("This is your client");
+  Serial.println("This is your radio 1");
   Serial.println("--------------------\n");
 }//end setup
 
 void loop() {
   message = "HELLO SERVER!!!";
   //Parameter to send messages
-  //server ID, message, length, maximum retrie wait time, maximum retries
+  //server ID, message, maximum retrie wait time, maximum retries
   if(radio1.send(radio2_id, message)){
 	Serial.println("Packet delivered!");
   }else{

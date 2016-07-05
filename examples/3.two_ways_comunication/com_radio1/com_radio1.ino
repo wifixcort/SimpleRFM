@@ -5,10 +5,6 @@
  ricardo@crcibernetica.com
  http://crcibernetica.com
 
- In this example we only have two nodes involved,
- here we send a messege to our partner and check
- if he respond us
-
  License
  **********************************************************************************
  This program is free software; you can redistribute it 
@@ -33,41 +29,45 @@
  Please maintain this license information along with authorship
  and copyright notices in any redistribution of this code
  **********************************************************************************
-*/
+ */
 
 #include <SimpleRFM.h>
 
 #define SERIAL_BAUD   115200
 
-uint8_t node_id = 8;      //This node id
-uint8_t radio2_id = 1;    //The server ID
+uint8_t radio1_id = 1;    //This node id
+uint8_t radio2_id = 2;    //The server ID
 //uint8_t network = 199;  //Network Indentification
 SimpleRFM radio1;         //SimpleRFM definition
 String message = "";      //Packet to send
-String msg = "";          //Received packets
+String msg = "";          //Messages to send
+uint32_t previousMillis = 0;
 
 void setup() {
-//Default parameters in order
-//uint8_t server_id, uint8_t network, const char encryptKey, boolean LowPower/HighPower, Frecuency
-  radio1.initialize(node_id);
+  //Default parameters in order
+  //uint8_t server_id, uint8_t network, const char encryptKey, boolean LowPower/HighPower, Frecuency
+  radio1.initialize(radio1_id);
   Serial.begin(SERIAL_BAUD);
-  Serial.println("This is your client");
+  Serial.println("This is your radio 1");
   Serial.println("--------------------\n");
 }//end setup
 
 void loop() {
-  node_a.receive(msg);//Save received messages
+  message = "HELLO NODE 2";
+  radio_message(millis(), 5000, message);
+  radio1.receive(msg);
   if(msg != ""){//Check if msg is empty
 	Serial.println(msg);//Print message received
   }//end if
-
-  message = "HELLO NODE B!!!";
-  //Parameter to send messages
-  //node ID, message, length, maximum retries, maximum retrie wait time
-  if(node_a.send(node_b_id, message)){
-	  Serial.println(F("Packet delivered!"));
-  }else{
-	  Serial.println(F("Packet not receive"));
-  }//end if
-  delay(1000);
 }//loop
+
+void radio_message(uint32_t timer, uint32_t interval, String message){
+  if(timer - previousMillis > interval) {
+	if(radio1.send(radio2_id, message)){
+	  Serial.println("Packet delivered!");
+	}else{
+	  Serial.println("Packet not receive");
+	}//end if
+    previousMillis = timer;
+  }//end if
+}//end radio_message
