@@ -36,6 +36,7 @@
 
 #include <Arduino.h>
 #include "RFM69.h"    //https://www.github.com/lowpowerlab/rfm69
+#include "RFM69config.h"
 #include <SPI.h>
 
 #define RF69_SPI_CS             SS 
