@@ -60,7 +60,6 @@ boolean SimpleRFM::receive(String &msg){
   msg = "";//Delete old string
   if (RFM69::receiveDone()){
 	node_id_receive = RFM69::SENDERID;//Save node id
-	_rssi = RFM69::RSSI;//Save node rssi
 	for(uint8_t i = 0; i < RFM69::DATALEN; i++){
 	  msg += (char)RFM69::DATA[i];//This is the data
 	}//end for
@@ -87,18 +86,9 @@ uint8_t SimpleRFM::id_receive(){
   return node_id_receive;
 }//end id_receive
 
-void SimpleRFM::sleep(){
-  RFM69::sleep();
-}//end sleep
-
-
 void SimpleRFM::alert(uint8_t t_delay){
   pinMode(LED, OUTPUT);
   digitalWrite(LED,HIGH);
   delay(t_delay);
   digitalWrite(LED,LOW);
 }//end alert_incomming
-
-int SimpleRFM::rssi(){
-    return this->_rssi;
-}//end SimpleRFM_rssi

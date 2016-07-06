@@ -1,10 +1,9 @@
-SimpleRFM network
+#SimpleRFM
 
-The purpose is create a network of sensors with moteinos and raspberry Pi as a gateway / server.
+The purpose of this library is make a little ease work with the RMF69 library provided by [LowPowerLab.com](https://github.com/LowPowerLab/RFM69)
 
-The GenSens library simplifies the job of receiving and transmitting packets.
+All parent methods are available.
+<br/>
+Examples provided allow an introducction to use this library from basics including a few tricks to use your RFM69 transceivers
+All examples are tested with Moteino and Feather SAMD
 
-All transmitions are a C string type, only to send the sensor measurement
-separated by ";" as many sensors like you want; the first value will be the node id that send the information.
-
-The gateway is responsible for split the string to send to the Raspberry Pi emoncms platform.

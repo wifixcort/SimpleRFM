@@ -87,5 +87,6 @@ void loop() {
 	SLEEP_1S, SLEEP_2S, SLEEP_4S, SLEEP_8S, SLEEP_FOREVER
 	See more examples if how use LowPower library
    */
+  radio1.sleep();
   LowPower.powerDown(SLEEP_8S, ADC_OFF, BOD_OFF);
 }//loop

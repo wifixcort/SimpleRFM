@@ -68,11 +68,9 @@
 #define FLASH_SS      23 // and FLASH SS on D23
 #endif
 
-class SimpleRFM: public RFM69{// //RFM69::
+class SimpleRFM: public RFM69{
  private:
   uint8_t node_id_receive;
-  int8_t _rssi;
-  RFM69 radio;
   void alert(uint8_t t_delay);
  public:
   //    SimpleRFM(){};//Empty constructor
@@ -81,8 +79,6 @@ class SimpleRFM: public RFM69{// //RFM69::
   bool initialize(uint8_t node_Id, uint8_t netw_id = 100, const char *encryptK = "sampleEncryptKey", boolean mote_type=false, uint8_t frequency = RF69_915MHZ);
   boolean receive(String &msg);
   boolean send(uint8_t &gateway, String s_buffer, uint8_t retryWaitTime=200, uint8_t retries=2);// const void* buffe
-  void sleep();
   uint8_t id_receive();
-  int rssi();
 };
 #endif /* #ifndef __SimpleRFM_H__ */
