@@ -35,7 +35,7 @@
 #define __SIMPLERFM_H__
 
 #include <Arduino.h>
-#include <RFM69.h>    //https://www.github.com/lowpowerlab/rfm69
+#include "RFM69.h"    //https://www.github.com/lowpowerlab/rfm69
 #include <SPI.h>
 
 #define RF69_SPI_CS             SS 

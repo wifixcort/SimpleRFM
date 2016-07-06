@@ -55,7 +55,7 @@ void loop(){
 	Serial.print(msg);//Print message received
 	Serial.print("---> ");
 	Serial.print("RSSI = ");
-	Serial.println(radio2.rssi());
+	Serial.println(radio2.RSSI);
   }//end if
   Serial.flush();
 }//end loop
