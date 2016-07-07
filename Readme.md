@@ -1,6 +1,6 @@
 #SimpleRFM
 
-El proposito de esta librería es simplificar el trabajo necesario para utilizar el transmisor RFM69 utilizando las librería de [LowPowerLab.com](https://github.com/LowPowerLab/RFM69)
+El proposito de esta librería es simplificar el trabajo necesario para utilizar el transmisor RFM69 utilizando las librería de [LowPowerLab.com](https://github.com/LowPowerLab/RFM69) incluidas por defecto
 
 Todos los métodos de la clase padre están disponibles
 <br/>
