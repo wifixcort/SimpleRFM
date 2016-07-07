@@ -1,8 +1,9 @@
 #SimpleRFM
 
-The purpose of this library is to simplify working with the RMF69 library provided by [LowPowerLab.com](https://github.com/LowPowerLab/RFM69)
+El proposito de esta librería es simplificar el trabajo necesario para utilizar el transmisor RFM69 utilizando las librería de [LowPowerLab.com](https://github.com/LowPowerLab/RFM69)
 
-All parent methods are available.
+Todos los métodos de la clase padre están disponibles
 <br/>
-Examples provided allow an introducction to use this library from basics including a few tricks to use your RFM69 transceivers
-All examples are tested with Moteino and Feather SAMD
+Los ejemplos propuestos permiten una más fácil introducción al uso de esta librería y se proveen además algunos métodos interesantes para manejar problemas un poco más complejos
+
+Todos los ejemplos han sido probados en AVR y SAMD21
