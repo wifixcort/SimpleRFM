@@ -39,11 +39,8 @@
 uint8_t radio1_id = 1;    //This node id
 uint8_t radio2_id = 2;    //The server ID
 //uint8_t network = 199;  //Network Indentification
-=======
 uint8_t radio1_id = 1;      //This node id
 uint8_t radio2_id = 2;    // Destination radio id
-//uint8_t network = 199;  //Network Indentification is 100 by default
->>>>>>> af1df105b0ab50684f13b7753bf7e989694bbd40
 SimpleRFM radio1;         //SimpleRFM definition
 String message = "";      //Packet to send
 
