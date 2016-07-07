@@ -35,7 +35,6 @@
 
 #define SERIAL_BAUD   115200
 
-<<<<<<< HEAD
 uint8_t radio1_id = 1;    //This node id
 uint8_t radio2_id = 2;    //The server ID
 //uint8_t network = 199;  //Network Indentification
