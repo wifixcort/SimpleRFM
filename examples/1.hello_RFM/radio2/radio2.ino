@@ -1,5 +1,5 @@
 /*
- Standart Gateway Trasmition
+ Simple receive example
 
  Ricardo Mena C
  ricardo@crcibernetica.com
@@ -35,8 +35,13 @@
 
 #define SERIAL_BAUD   115200
 
+<<<<<<< HEAD
 uint8_t radio2_id = 2;    //This node id
 //uint8_t network = 199;  //Network Indentification
+=======
+uint8_t radio2_id = 2;      //This node id
+//uint8_t network = 199;  //Network Indentification is 100 by default
+>>>>>>> af1df105b0ab50684f13b7753bf7e989694bbd40
 SimpleRFM radio2;         //SimpleRFM definition
 String msg = "";          //Received packets
 
@@ -45,8 +50,8 @@ void setup() {
   //uint8_t server_id, uint8_t network, const char encryptKey, boolean LowPower/HighPower, Frecuency
   radio2.initialize(radio2_id);
   Serial.begin(SERIAL_BAUD);
-  Serial.println(F("This is your radio 2"));
-  Serial.println(F("-------------------\n"));
+  Serial.println(F("This is radio 2"));
+  Serial.println(F("---------------\n"));
 }//end setup
 
 void loop(){

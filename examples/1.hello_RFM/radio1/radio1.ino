@@ -1,5 +1,5 @@
 /*
- Standart Node Trasmition
+ Simple transmit example
 
  Ricardo Mena C
  ricardo@crcibernetica.com
@@ -35,9 +35,15 @@
 
 #define SERIAL_BAUD   115200
 
+<<<<<<< HEAD
 uint8_t radio1_id = 1;    //This node id
 uint8_t radio2_id = 2;    //The server ID
 //uint8_t network = 199;  //Network Indentification
+=======
+uint8_t radio1_id = 1;      //This node id
+uint8_t radio2_id = 2;    // Destination radio id
+//uint8_t network = 199;  //Network Indentification is 100 by default
+>>>>>>> af1df105b0ab50684f13b7753bf7e989694bbd40
 SimpleRFM radio1;         //SimpleRFM definition
 String message = "";      //Packet to send
 
@@ -46,18 +52,18 @@ void setup() {
   //uint8_t server_id, uint8_t network, const char encryptKey, boolean LowPower/HighPower, Frecuency
   radio1.initialize(radio1_id);
   Serial.begin(SERIAL_BAUD);
-  Serial.println("This is your radio 1");
-  Serial.println("--------------------\n");
+  Serial.println("This is radio 1");
+  Serial.println("---------------\n");
 }//end setup
 
 void loop() {
-  message = "HELLO SERVER!!!";
+  message = "Hello this is radio 1!";
   //Parameter to send messages
-  //server ID, message, maximum retrie wait time, maximum retries
+  //server ID, message, maximum retry wait time, maximum retries
   if(radio1.send(radio2_id, message)){
 	Serial.println("Packet delivered!");
   }else{
-	Serial.println("Packet not receive");
+	Serial.println("Packet not received");
   }//end if
   delay(1000);
 }//loop
