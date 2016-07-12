@@ -13,7 +13,31 @@ Send a an Arduino String to a specified node.
 ####Usage
 boolean send(int nodeId, String message) //returns true if transmission successful
 ```c++
-send(2, "Hello"); //send "Hello" to node 2
+#include <SimpleRFM.h>
+
+#define nodeId 1 // each node in the network must have a unique nodeId (1-254)
+#define receiver 2 
+#define network 100 // all nodes need to have the same network (1-254)
+#define encryptKey "sampleEncryptKey" // 16 characters, all nodes need to have the same encryptKey
+
+SimpleRFM radio;
+
+void setup() {
+  
+  Serial.begin(9600);
+
+  radio.begin(nodeId, network, encryptKey);
+}//end setup
+
+void loop() {
+  String message = "Hello";
+  if(radio.send(receiver, message)){ //
+	Serial.println("Packet delivered");
+  }else{
+	Serial.println("Packet not delivered");
+  }//end if
+  delay(1000);
+}//loop
 ```
 
 ####Returns boolean 
