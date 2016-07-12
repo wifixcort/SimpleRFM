@@ -1,8 +1,11 @@
 /*
  Simple transmit example
 
+ Bentley Born
+ bentley@crcibernetica.com
  Ricardo Mena C
  ricardo@crcibernetica.com
+
  http://crcibernetica.com
 
  License
@@ -33,33 +36,26 @@
 
 #include <SimpleRFM.h>
 
-#define SERIAL_BAUD   115200
+#define nodeId 1 // each node in the network must have a unique nodeId (1-254)
+#define receiver 2 // the other radio should have a nodeId of 2
+#define network 100 // all nodes need to have the same network (1-254)
+#define encryptKey "sampleEncryptKey" // 16 characters, all nodes need to have the same encryptKey
 
-uint8_t radio1_id = 1;    //This node id
-uint8_t radio2_id = 2;    //The server ID
-//uint8_t network = 199;  //Network Indentification
-uint8_t radio1_id = 1;      //This node id
-uint8_t radio2_id = 2;    // Destination radio id
 SimpleRFM radio1;         //SimpleRFM definition
-String message = "";      //Packet to send
 
 void setup() {
-  //Default parameters in order
-  //uint8_t server_id, uint8_t network, const char encryptKey, boolean LowPower/HighPower, Frecuency
-  radio1.initialize(radio1_id);
-  Serial.begin(SERIAL_BAUD);
-  Serial.println("This is radio 1");
-  Serial.println("---------------\n");
+  
+  radio1.begin(nodeId, network, encryptKey);
+
+  Serial.begin(9600);
 }//end setup
 
 void loop() {
-  message = "Hello this is radio 1!";
-  //Parameter to send messages
-  //server ID, message, maximum retry wait time, maximum retries
-  if(radio1.send(radio2_id, message)){
-	Serial.println("Packet delivered!");
+  String message = "Hello";
+  if(radio.send(receiver, message)){
+	   Serial.println("Packet delivered");
   }else{
-	Serial.println("Packet not received");
+	   Serial.println("Packet not delivered");
   }//end if
   delay(1000);
 }//loop

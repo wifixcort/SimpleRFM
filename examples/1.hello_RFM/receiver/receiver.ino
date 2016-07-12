@@ -1,8 +1,11 @@
 /*
  Simple receive example
 
+ Bentley Born
+ bentley@crcibernetica.com
  Ricardo Mena C
  ricardo@crcibernetica.com
+
  http://crcibernetica.com
 
  License
@@ -33,27 +36,23 @@
 
 #include <SimpleRFM.h>
 
-#define SERIAL_BAUD   115200
+#define nodeId 2 // each node in the network must have a unique nodeId (1-254)
+#define network 100 // all nodes need to have the same network (1-254)
+#define encryptKey "sampleEncryptKey" // 16 characters, all nodes need to have the same encryptKey
 
-uint8_t radio2_id = 2;    //This node id
-//uint8_t network = 199;  //Network Indentification
-uint8_t radio2_id = 2;      //This node id
-SimpleRFM radio2;         //SimpleRFM definition
-String msg = "";          //Received packets
+SimpleRFM radio;
 
 void setup() {
-  //Default parameters in order
-  //uint8_t server_id, uint8_t network, const char encryptKey, boolean LowPower/HighPower, Frecuency
-  radio2.initialize(radio2_id);
-  Serial.begin(SERIAL_BAUD);
-  Serial.println(F("This is radio 2"));
-  Serial.println(F("---------------\n"));
+
+  Serial.begin(9600);
+
+  radio.begin(nodeId, network, encryptKey);
 }//end setup
 
 void loop(){
-  radio2.receive(msg);
-  if(msg != ""){//Check if msg is empty
-	Serial.println(msg);//Print message received
+  String message;
+  radio.receive(message);
+  if(message !""){
+    Serial.println(message);
   }//end if
-  Serial.flush();
 }//end loop

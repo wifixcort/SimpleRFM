@@ -7,23 +7,23 @@
 
  License
  **********************************************************************************
- This program is free software; you can redistribute it 
- and/or modify it under the terms of the GNU General    
- Public License as published by the Free Software       
- Foundation; either version 3 of the License, or        
- (at your option) any later version.                    
-                                                        
- This program is distributed in the hope that it will   
- be useful, but WITHOUT ANY WARRANTY; without even the  
- implied warranty of MERCHANTABILITY or FITNESS FOR A   
- PARTICULAR PURPOSE. See the GNU General Public        
- License for more details.                              
-                                                        
- You should have received a copy of the GNU General    
+ This program is free software; you can redistribute it
+ and/or modify it under the terms of the GNU General
+ Public License as published by the Free Software
+ Foundation; either version 3 of the License, or
+ (at your option) any later version.
+
+ This program is distributed in the hope that it will
+ be useful, but WITHOUT ANY WARRANTY; without even the
+ implied warranty of MERCHANTABILITY or FITNESS FOR A
+ PARTICULAR PURPOSE. See the GNU General Public
+ License for more details.
+
+ You should have received a copy of the GNU General
  Public License along with this program.
  If not, see <http://www.gnu.org/licenses/>.
-                                                        
- Licence can be viewed at                               
+
+ Licence can be viewed at
  http://www.gnu.org/licenses/gpl-3.0.txt
 
  Please maintain this license information along with authorship
@@ -33,7 +33,7 @@
 
 #include "SimpleRFM.h"
 
-SimpleRFM::SimpleRFM(uint8_t slaveSelectPin, uint8_t interruptPin, bool isRFM69HW, uint8_t interruptNum){     
+SimpleRFM::SimpleRFM(uint8_t slaveSelectPin, uint8_t interruptPin, bool isRFM69HW, uint8_t interruptNum){
   RFM69::_slaveSelectPin = slaveSelectPin;
   RFM69::_interruptPin = interruptPin;
   RFM69::_interruptNum = interruptNum;
@@ -43,7 +43,7 @@ SimpleRFM::SimpleRFM(uint8_t slaveSelectPin, uint8_t interruptPin, bool isRFM69H
   RFM69::_isRFM69HW = isRFM69HW;
 }//end SimpleRFM
 
-bool SimpleRFM::initialize(uint8_t node_Id, uint8_t netw_id, const char *encryptK, boolean mote_type, uint8_t frequency){
+bool SimpleRFM::begin(uint8_t node_Id, uint8_t netw_id, const char *encryptK, boolean mote_type, uint8_t frequency){
   bool radio = RFM69::initialize(frequency, node_Id, netw_id);
   if(mote_type){//is this a high power SimpleRFM?
 	RFM69::setHighPower();
@@ -73,7 +73,7 @@ boolean SimpleRFM::receive(String &msg){
 }//end receive
 
 boolean SimpleRFM::send(uint8_t &gateway, String s_buffer, uint8_t retryWaitTime, uint8_t retries){//retrines default 2, retriesWait default 40
-  
+
   if (RFM69::sendWithRetry(gateway, s_buffer.c_str(), s_buffer.length(), retries, retryWaitTime)){
 	alert(3);
 	return true;//ok!

@@ -25,7 +25,7 @@ Example
 SimpleRFM radio;
 
 void setup() {
-  
+
   Serial.begin(9600);
 
   radio.begin(nodeId, network, encryptKey);
@@ -34,9 +34,9 @@ void setup() {
 void loop() {
   String message = "Hello";
   if(radio.send(receiver, message)){ //
-	Serial.println("Packet delivered");
+	   Serial.println("Packet delivered");
   }else{
-	Serial.println("Packet not delivered");
+	   Serial.println("Packet not delivered");
   }//end if
   delay(1000);
 }//loop
@@ -60,17 +60,17 @@ Example
 SimpleRFM radio;
 
 void setup() {
-  
+
   Serial.begin(9600);
 
   radio.begin(nodeId, network, encryptKey);
 }//end setup
 
 void loop() {
-String message;
+  String message;
   radio.receive(message);
   if(message !""){
     Serial.println(message);
-  }
+  }//end if
 }//loop
 ```
