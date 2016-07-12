@@ -40,11 +40,33 @@ void loop() {
 }//loop
 ```
 
-####Returns boolean 
-
 ###receive()
 
 Receives an Arduino String from a remote radio.
 
 ####Usage
 receive(String message) // received String
+```
+#include <SimpleRFM.h>
+
+#define nodeId 2 // each node in the network must have a unique nodeId (1-254)
+#define network 100 // all nodes need to have the same network (1-254)
+#define encryptKey "sampleEncryptKey" // 16 characters, all nodes need to have the same encryptKey
+
+SimpleRFM radio;
+
+void setup() {
+  
+  Serial.begin(9600);
+
+  radio.begin(nodeId, network, encryptKey);
+}//end setup
+
+void loop() {
+String message;
+  radio.receive(message);
+  if(message !""){
+    Serial.println(message);
+  }
+}//loop
+```
