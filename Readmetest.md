@@ -8,7 +8,7 @@ This library only sends an Arduino String object. There are only two functions: 
 
 ###send()
 
-Send an Arduino String object to a specified node. The maximum size of the String is 64 bytes.
+Send an Arduino String object to a specified node. The maximum size of the String is 61 bytes.
 
 ####Usage
 boolean send(int nodeId, String message) //returns true if transmission successful
