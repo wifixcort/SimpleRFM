@@ -46,7 +46,7 @@ Receives an Arduino String from a remote radio.
 
 ####Usage
 receive(String message) // received String
-```
+```c++
 #include <SimpleRFM.h>
 
 #define nodeId 2 // each node in the network must have a unique nodeId (1-254)
