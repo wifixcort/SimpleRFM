@@ -36,23 +36,23 @@
 
 #include <SimpleRFM.h>
 
-#define nodeId 1 // each node in the network must have a unique nodeId (1-254)
-#define receiver 2 // the other radio should have a nodeId of 2
-#define network 100 // all nodes need to have the same network (1-254)
-#define encryptKey "sampleEncryptKey" // 16 characters, all nodes need to have the same encryptKey
+#define NODE_ID 1 // each node in the network must have a unique nodeId (1-254)
+#define RECEIVER 2 // the other radio should have a nodeId of 2
+#define NETWORK 100 // all nodes need to have the same network (1-254)
+#define ENCRYPT_KEY "sampleEncryptKey" // 16 characters, all nodes need to have the same encryptKey
 
 SimpleRFM radio1;         //SimpleRFM definition
 
 void setup() {
   
-  radio1.begin(nodeId, network, encryptKey);
+  radio1.begin(NODE_ID, NETWORK, ENCRYPT_KEY);
 
   Serial.begin(9600);
 }//end setup
 
 void loop() {
   String message = "Hello";
-  if(radio.send(receiver, message)){
+  if(radio.send(RECEIVER, message)){
 	   Serial.println("Packet delivered");
   }else{
 	   Serial.println("Packet not delivered");

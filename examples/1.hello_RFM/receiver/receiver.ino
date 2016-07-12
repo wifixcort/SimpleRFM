@@ -36,9 +36,9 @@
 
 #include <SimpleRFM.h>
 
-#define nodeId 2 // each node in the network must have a unique nodeId (1-254)
-#define network 100 // all nodes need to have the same network (1-254)
-#define encryptKey "sampleEncryptKey" // 16 characters, all nodes need to have the same encryptKey
+#define NODE_ID 2 // each node in the network must have a unique nodeId (1-254)
+#define NETWORK 100 // all nodes need to have the same network (1-254)
+#define ENCRYPT_KEY "sampleEncryptKey" // 16 characters, all nodes need to have the same encryptKey
 
 SimpleRFM radio;
 
@@ -46,7 +46,7 @@ void setup() {
 
   Serial.begin(9600);
 
-  radio.begin(nodeId, network, encryptKey);
+  radio.begin(NODE_ID, NETWORK, ENCRYPT_KEY);
 }//end setup
 
 void loop(){
