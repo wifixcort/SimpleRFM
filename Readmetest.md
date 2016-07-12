@@ -8,10 +8,12 @@ This library only sends an Arduino String object. There are only two functions: 
 
 ###send()
 
-Send a an Arduino String to a specified node.
+Send an Arduino String object to a specified node. The maximum size of the String is 64 bytes.
 
 ####Usage
 boolean send(int nodeId, String message) //returns true if transmission successful
+
+Example
 ```c++
 #include <SimpleRFM.h>
 
@@ -46,6 +48,8 @@ Receives an Arduino String from a remote radio.
 
 ####Usage
 receive(String message) // received String
+
+Example
 ```c++
 #include <SimpleRFM.h>
 
