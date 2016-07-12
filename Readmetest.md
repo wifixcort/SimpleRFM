@@ -1,8 +1,8 @@
 #SimpleRFM
 
-The purpose of this library is to simplify the use of HopeRF RFM69 radios. This library uses the RFM69 library created by
+The purpose of this library is to simplify the use of HopeRF RFM69 radios. This library uses the RFM69 library created by Low Power Labs. (add link)
 Many radio libraries use char arrays and/or c strings which can be overly complex for many beginner programmers.
-This library only sends an Arduino String object. There are only two functions: send() and receive().
+This library sends and receives an Arduino String object. The other functions of the RFM69 library are available for more advanced users.
 
 ##Functions
 
