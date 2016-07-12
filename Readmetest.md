@@ -18,7 +18,7 @@ Example
 #include <SimpleRFM.h>
 
 #define nodeId 1 // each node in the network must have a unique nodeId (1-254)
-#define receiver 2 
+#define receiver 2 // the other radio should have a nodeId of 2
 #define network 100 // all nodes need to have the same network (1-254)
 #define encryptKey "sampleEncryptKey" // 16 characters, all nodes need to have the same encryptKey
 
