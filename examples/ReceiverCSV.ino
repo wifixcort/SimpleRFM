@@ -15,19 +15,19 @@ void setup() {
 
 void loop() {
   String message = "";
-  //create a String array of 4 to put the separated values
+  //create a String array of 4 to put the comma separated values
   // example message "7/15/2016 10:12:34,432,123,7.34"
   String values[4];
   
   radio.receive(message); // check radio for new messages
 
   if (message != "") {
-    split(message, values, 4, ','); // a helper function to split the message into values[]
+    values = radio.split(message, 4, ','); // a helper function to split the message into values[]
  
     String timestamp = values[0];
-    int sensor1 = values[1].toInt(); //convert to integer
-    int sensor2 = values[2].toInt(); //convert to integer
-    float sensor3 = values[3].toFloat(); //convert to float
+    int sensor1 = values[1].toInt(); //convert String to integer
+    int sensor2 = values[2].toInt(); //convert String to integer
+    float sensor3 = values[3].toFloat(); //convert String to float
 
     Serial.println(timestamp);
     Serial.println(sensor1);
@@ -39,20 +39,3 @@ void loop() {
 }//loop
 
 }
-
-void split(String &message, String *sArray, int size, char separator){
-  for(int i = 0; i < size; i++){//Clean array
-    sArray[i] = "";
-  }//end for  
-  int last_index = 0;//Remember last index in message
-  for(int i = 0; i < size; i++){
-    for(int j = last_index; j < message.length(); j++){
-      if(message[j] == separator){
-        last_index = j+1;
-        break;
-      }else{
-        sArray[i] += message[j];
-      }//end if
-    }//end for
-  }//end for
-}//end split
