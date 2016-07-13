@@ -71,15 +71,16 @@
 
 class SimpleRFM: public RFM69{
  private:
-  uint8_t node_id_receive;
-  void alert(uint8_t t_delay);
+
+   uint8_t node_id_receive;
+   void alert(uint8_t t_delay);
  public:
   //    SimpleRFM(){};//Empty constructor
   virtual ~SimpleRFM();
   SimpleRFM(uint8_t slaveSelectPin=RF69_SPI_CS, uint8_t interruptPin=RF69_IRQ_PIN, bool isRFM69HW=false, uint8_t interruptNum=RF69_IRQ_NUM);
   bool begin(uint8_t node_Id, uint8_t netw_id = 100, const char *encryptK = "sampleEncryptKey", boolean mote_type=false, uint8_t frequency = RF69_915MHZ);
   boolean receive(String &msg);
-  boolean send(uint8_t &gateway, String s_buffer, uint8_t retryWaitTime=200, uint8_t retries=2);// const void* buffe
+  boolean send(uint8_t gateway, String s_buffer, uint8_t retryWaitTime=200, uint8_t retries=2);// const void* buffe
   uint8_t id_receive();
   void split(String &message, String *sArray, int size, char separator);
 };

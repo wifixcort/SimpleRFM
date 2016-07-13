@@ -18,12 +18,12 @@ void loop() {
   //create a String array of 4 to put the comma separated values
   // example message "7/15/2016 10:12:34,432,123,7.34"
   String values[4];
-  
+
   radio.receive(message); // check radio for new messages
 
   if (message != "") {
     radio.split(message, values, 4, ','); // a helper function to split the message into values[]
- 
+
     String timestamp = values[0];
     int sensor1 = values[1].toInt(); //convert String to integer
     int sensor2 = values[2].toInt(); //convert String to integer
@@ -33,7 +33,6 @@ void loop() {
     Serial.println(sensor1);
     Serial.println(sensor2);
     Serial.println(sensor3);
-
   }//end if
   delay(1000);
 }//loop

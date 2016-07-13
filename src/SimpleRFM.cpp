@@ -46,7 +46,7 @@ SimpleRFM::SimpleRFM(uint8_t slaveSelectPin, uint8_t interruptPin, bool isRFM69H
 bool SimpleRFM::begin(uint8_t node_Id, uint8_t netw_id, const char *encryptK, boolean mote_type, uint8_t frequency){
   bool radio = RFM69::initialize(frequency, node_Id, netw_id);
   if(mote_type){//is this a high power SimpleRFM?
-	RFM69::setHighPower();
+    RFM69::setHighPower();
   }//end if
   RFM69::encrypt(encryptK);//(const char*)
   return radio;
@@ -59,7 +59,7 @@ SimpleRFM::~SimpleRFM(){
 boolean SimpleRFM::receive(String &msg){
   msg = "";//Delete old string
   if (RFM69::receiveDone()){
-	node_id_receive = RFM69::SENDERID;//Save node id
+	  node_id_receive = RFM69::SENDERID;//Save node id
 	for(uint8_t i = 0; i < RFM69::DATALEN; i++){
 	  msg += (char)RFM69::DATA[i];//This is the data
 	}//end for
@@ -72,7 +72,7 @@ boolean SimpleRFM::receive(String &msg){
   return false;
 }//end receive
 
-boolean SimpleRFM::send(uint8_t &gateway, String s_buffer, uint8_t retryWaitTime, uint8_t retries){//retrines default 2, retriesWait default 40
+boolean SimpleRFM::send(uint8_t gateway, String s_buffer, uint8_t retryWaitTime, uint8_t retries){//retrines default 2, retriesWait default 40
 
   if (RFM69::sendWithRetry(gateway, s_buffer.c_str(), s_buffer.length(), retries, retryWaitTime)){
 	alert(3);
@@ -89,7 +89,7 @@ uint8_t SimpleRFM::id_receive(){
 void SimpleRFM::split(String &message, String *sArray, int size, char separator){
   for(uint8_t i = 0; i < size; i++){//Clean array
     sArray[i] = "";
-  }//end for  
+  }//end for
   uint8_t last_index = 0;//Remember last index in message
   for(uint8_t i = 0; i < size; i++){
     for(uint8_t j = last_index; j < message.length(); j++){
