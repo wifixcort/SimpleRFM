@@ -81,5 +81,6 @@ class SimpleRFM: public RFM69{
   boolean receive(String &msg);
   boolean send(uint8_t &gateway, String s_buffer, uint8_t retryWaitTime=200, uint8_t retries=2);// const void* buffe
   uint8_t id_receive();
+  void split(String &message, String *sArray, int size, char separator);
 };
 #endif /* #ifndef __SimpleRFM_H__ */

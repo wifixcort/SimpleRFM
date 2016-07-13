@@ -86,6 +86,23 @@ uint8_t SimpleRFM::id_receive(){
   return node_id_receive;
 }//end id_receive
 
+void SimpleRFM::split(String &message, String *sArray, int size, char separator){
+  for(uint8_t i = 0; i < size; i++){//Clean array
+    sArray[i] = "";
+  }//end for  
+  uint8_t last_index = 0;//Remember last index in message
+  for(uint8_t i = 0; i < size; i++){
+    for(uint8_t j = last_index; j < message.length(); j++){
+      if(message[j] == separator){
+        last_index = j+1;
+        break;
+      }else{
+        sArray[i] += message[j];
+      }//end if
+    }//end for
+  }//end for
+}
+
 void SimpleRFM::alert(uint8_t t_delay){
   pinMode(LED, OUTPUT);
   digitalWrite(LED,HIGH);
