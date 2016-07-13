@@ -6,7 +6,7 @@ This library uses the RFM69 library created by [LowPowerLabs](https://github.com
 
 Many radio libraries use char arrays and/or c strings which can be overly complex for many beginner programmers.
 This library only uses an [Arduino String](https://www.arduino.cc/en/Reference/StringObject) object. 
-The high level String function can make simple work of constructing and parsing transmitted data.
+The high level String functions simplify constructing and parsing transmitted data.
 
 ##Functions
 
@@ -23,9 +23,9 @@ Example
 ```c++
 #include <SimpleRFM.h>
 
-#define NODEID 1 // each node in the network must have a unique nodeId (1-254)
-#define RECEIVER 2 // the other radio should have a nodeId of 2
-#define NETWORK 100 // all nodes need to have the same network (1-254)
+#define NODEID 1 // each node in the network must have a unique nodeId (0-254)
+#define RECEIVER 2 // the other radio should have a nodeId of 2 (sending to node 255 is a broadcast)
+#define NETWORK 100 // all nodes need to have the same network (0-255)
 #define ENCRYPTKEY "sampleEncryptKey" // 16 characters, all nodes need to have the same encryptKey
 
 SimpleRFM radio;
@@ -53,7 +53,7 @@ void loop() {
 Receives an Arduino String from a remote radio.
 
 ####Usage
-```
+```c++
 void receive(String message) // received String
 ```
 
