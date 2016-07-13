@@ -2,7 +2,7 @@
 
 The purpose of this library is to simplify the use of HopeRF RFM69 radios. This library uses the RFM69 library created by
 Many radio libraries use char arrays and/or c strings which can be overly complex for many beginner programmers.
-This library only sends an Arduino String object. There are only two functions: send() and receive().
+This library only sends an Arduino String object.
 
 ##Functions
 
@@ -17,10 +17,10 @@ Example
 ```c++
 #include <SimpleRFM.h>
 
-#define nodeId 1 // each node in the network must have a unique nodeId (1-254)
-#define receiver 2 // the other radio should have a nodeId of 2
-#define network 100 // all nodes need to have the same network (1-254)
-#define encryptKey "sampleEncryptKey" // 16 characters, all nodes need to have the same encryptKey
+#define NODEID 1 // each node in the network must have a unique nodeId (1-254)
+#define RECEIVER 2 // the other radio should have a nodeId of 2
+#define NETWORK 100 // all nodes need to have the same network (1-254)
+#define ENCRYPTKEY "sampleEncryptKey" // 16 characters, all nodes need to have the same encryptKey
 
 SimpleRFM radio;
 
@@ -28,12 +28,12 @@ void setup() {
 
   Serial.begin(9600);
 
-  radio.begin(nodeId, network, encryptKey);
+  radio.begin(NODEID, NETWORK, ENCRYPTKEY);
 }//end setup
 
 void loop() {
   String message = "Hello";
-  if(radio.send(receiver, message)){ //
+  if(radio.send(RECEIVER, message)){ //
 	   Serial.println("Packet delivered");
   }else{
 	   Serial.println("Packet not delivered");
@@ -53,9 +53,9 @@ Example
 ```c++
 #include <SimpleRFM.h>
 
-#define nodeId 2 // each node in the network must have a unique nodeId (1-254)
-#define network 100 // all nodes need to have the same network (1-254)
-#define encryptKey "sampleEncryptKey" // 16 characters, all nodes need to have the same encryptKey
+#define NODEID 2 // each node in the network must have a unique nodeId (1-254)
+#define NETWORK 100 // all nodes need to have the same network (1-254)
+#define ENCRYPTKEY "sampleEncryptKey" // 16 characters, all nodes need to have the same encryptKey
 
 SimpleRFM radio;
 
@@ -63,7 +63,7 @@ void setup() {
 
   Serial.begin(9600);
 
-  radio.begin(nodeId, network, encryptKey);
+  radio.begin(NODEID, NETWORK, ENCRYPTKEY);
 }//end setup
 
 void loop() {
