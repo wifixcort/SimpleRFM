@@ -77,7 +77,7 @@ void setup() {
 void loop() {
   String message;
   radio.receive(message);
-  if(message !""){
+  if(message !=""){
     Serial.println(message);
   }//end if
 }//loop
