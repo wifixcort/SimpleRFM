@@ -33,28 +33,23 @@
 
 #include <SimpleRFM.h>
 
-#define SERIAL_BAUD   115200
+#define NODE_ID 1 // each node in the network must have a unique nodeId (1-254)
+#define RECEIVER 2 // the other radio should have a nodeId of 2
+#define NETWORK 100 // all nodes need to have the same network (1-254)
+#define ENCRYPT_KEY "sampleEncryptKey" // 16 characters, all nodes need to have the same encryptKey
 
-uint8_t radio1_id = 1;      //This node id
-uint8_t radio2_id = 2;    //The server ID
-//uint8_t network = 199;  //Network Indentification
-SimpleRFM radio1;         //SimpleRFM definition
-String message = "";      //Packet to send
+SimpleRFM radio;         //SimpleRFM definition
 
 void setup() {
-  //Default parameters in order
-  //uint8_t server_id, uint8_t network, const char encryptKey, boolean LowPower/HighPower, Frecuency
-  radio1.initialize(radio1_id);
-  Serial.begin(SERIAL_BAUD);
-  Serial.println("This is your radio 1");
-  Serial.println("--------------------\n");
+  
+  radio.begin(NODE_ID, NETWORK, ENCRYPT_KEY);
+
+  Serial.begin(9600);
 }//end setup
 
 void loop() {
-  message = "HELLO SERVER!!!";
-  //Parameter to send messages
-  //server ID, message, maximum retrie wait time, maximum retries
-  if(radio1.send(radio2_id, message)){
+  String message = "Hello";
+  if(radio.send(RECEIVER, message)){
 	Serial.println("Packet delivered!");
   }else{
 	Serial.println("Packet not receive");
