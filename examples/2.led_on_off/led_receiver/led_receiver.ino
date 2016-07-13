@@ -1,5 +1,5 @@
 /*
- Standart Node Trasmition
+ Standart Gateway Trasmition
 
  Ricardo Mena C
  ricardo@crcibernetica.com
@@ -33,37 +33,34 @@
 
 #include <SimpleRFM.h>
 
-#define SERIAL_BAUD   115200
-#define PUSH_BUTTON   5
+#define LED     10        //Use pin 13 if you use Feather
 
-uint8_t radio1_id = 1;    //This node id
-uint8_t radio2_id = 2;    //The server ID
-//uint8_t network = 199;  //Network Indentification
-SimpleRFM radio1;         //SimpleRFM definition
-String message = "";      //Packet to send
+#define NODE_ID 2 // each node in the network must have a unique nodeId (1-254)
+#define NETWORK 100 // all nodes need to have the same network (1-254)
+#define ENCRYPT_KEY "sampleEncryptKey" // 16 characters, all nodes need to have the same encryptKey
+
+SimpleRFM radio;
 
 void setup() {
-  pinMode(PUSH_BUTTON, INPUT_PULLUP);//Use a push button on pin 5
-  //Default parameters in order
-  //uint8_t server_id, uint8_t network, const char encryptKey, boolean LowPower/HighPower, Frecuency
-  radio1.initialize(radio1_id);
-  Serial.begin(SERIAL_BAUD);
-  Serial.println(F("This is your client"));
-  Serial.println(F("--------------------\n"));
+  pinMode(LED, OUTPUT);
+  digitalWrite(LED, LOW);
+
+  radio.begin(NODE_ID, NETWORK, ENCRYPT_KEY);
+
+  Serial.begin(9600);
 }//end setup
 
-void loop() {
-  if(digitaRead(PUSH_BUTTON) == HIGH){
-	message = "LED ON";
-  }else{
-	message = "LED OFF";
+void loop(){
+  String message;
+  radio.receive(message);
+  if(message != ""){//Check if message is empty
+	Serial.println(message);//Print message received
   }//end if
-  //Parameter to send messages
-  //server ID, message, length, maximum retries, maximum retrie wait time
-  if(radio1.send(radio2_id, message)){
-	Serial.println(F("Packet delivered!"));
-  }else{
-	Serial.println(F("Packet not receive"));
+
+  if(message == "LED ON"){
+	digitalWrite(LED, HIGH);
+  }else if(message == "LED OFF"){
+	digitalWrite(LED, LOW);
   }//end if
-  delay(1000);
-}//loop
+  Serial.flush();
+}//end loop
