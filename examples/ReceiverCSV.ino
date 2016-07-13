@@ -37,5 +37,3 @@ void loop() {
   }//end if
   delay(1000);
 }//loop
-
-}
