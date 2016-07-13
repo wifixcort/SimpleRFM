@@ -59,16 +59,7 @@ void setup() {
 
 void loop() {
   if(n_times >= t_wait){
-	String message;
-	//-----Your code here---->
-	String title = "Multiple_readings";
-	int read1 = digitalRead(12);
-	float read2 = analogRead(A0);
-	int read3 = random(100);
-
-	//Send them as one message
-	message = title +" "+ String(read1) +" "+ String(read2) +" "+ String(read3);
-
+	String message = "Hello";
 	if(radio.send(RECEIVER, message)){
 	  Serial.println("Packet delivered!");
 	}else{
