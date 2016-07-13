@@ -22,7 +22,7 @@ void loop() {
   radio.receive(message); // check radio for new messages
 
   if (message != "") {
-    values = radio.split(message, 4, ','); // a helper function to split the message into values[]
+    radio.split(message, values, 4, ','); // a helper function to split the message into values[]
  
     String timestamp = values[0];
     int sensor1 = values[1].toInt(); //convert String to integer

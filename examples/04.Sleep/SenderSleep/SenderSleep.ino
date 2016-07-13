@@ -1,5 +1,5 @@
 /*
- Standart Gateway Trasmition
+ Standart Node Trasmition
 
  Ricardo Mena C
  ricardo@crcibernetica.com
@@ -31,36 +31,52 @@
  **********************************************************************************
 */
 
+
 #include <SimpleRFM.h>
+#include <LowPower.h>   //https://github.com/rocketscream/Low-Power
 
-#define LED     10        //Use pin 13 if you use Feather
+/*
+  Note from Low-power github site
+  External interrupt during standby on ATSAMD21G18A requires a patch to the Arduino SAMD Core
+  in order for it to work. Fix is provided by this particular pull request.
+*/
 
-#define NODE_ID 2 // each node in the network must have a unique nodeId (1-254)
+#define NODE_ID 1 // each node in the network must have a unique nodeId (1-254)
+#define RECEIVER 2 // the other radio should have a nodeId of 2
 #define NETWORK 100 // all nodes need to have the same network (1-254)
 #define ENCRYPT_KEY "sampleEncryptKey" // 16 characters, all nodes need to have the same encryptKey
 
-SimpleRFM radio;
+SimpleRFM radio;         //SimpleRFM definition
 
 void setup() {
-  pinMode(LED, OUTPUT);
-  digitalWrite(LED, LOW);
-
-  radio.begin(NODE_ID, NETWORK, ENCRYPT_KEY);
 
   Serial.begin(9600);
+
+  radio.begin(NODE_ID, NETWORK, ENCRYPT_KEY);
 }//end setup
 
-void loop(){
+void loop() {
   String message;
-  radio.receive(message);
-  if(message != ""){//Check if message is empty
-	Serial.println(message);//Print message received
-  }//end if
+  String title = "Multiple_readings";
+  int read1 = digitalRead(12);
+  float read2 = analogRead(A0);
+  int read3 = random(100);
 
-  if(message == "LED ON"){
-	digitalWrite(LED, HIGH);
-  }else if(message == "LED OFF"){
-	digitalWrite(LED, LOW);
+  //Send them as one message
+  message = title +" "+ String(read1) +" "+ String(read2) +" "+ String(read3);
+
+  //Parameter to send messages
+  //server ID, message, maximum retrie wait time, maximum retries
+  if(radio.send(RECEIVER, message)){
+	Serial.println("Packet delivered!");
+  }else{
+	Serial.println("Packet not receive");
   }//end if
-  Serial.flush();
-}//end loop
+  /*You can use
+	SLEEP_15MS, SLEEP_30MS, SLEEP_60MS, SLEEP_120MS, SLEEP_250MS, SLEEP_500MS,
+	SLEEP_1S, SLEEP_2S, SLEEP_4S, SLEEP_8S, SLEEP_FOREVER
+	See more examples if how use LowPower library
+   */
+  radio.sleep();
+  LowPower.powerDown(SLEEP_8S, ADC_OFF, BOD_OFF);
+}//loop

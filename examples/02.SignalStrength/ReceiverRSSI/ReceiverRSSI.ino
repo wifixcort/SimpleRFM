@@ -41,16 +41,19 @@ SimpleRFM radio;
 
 void setup() {
 
-  radio.begin(NODE_ID, NETWORK, ENCRYPT_KEY);
-
   Serial.begin(9600);
+
+  radio.begin(NODE_ID, NETWORK, ENCRYPT_KEY);
 }//end setup
 
 void loop(){
   String message;
-  radio2.receive(message);
+  radio.receive(message);
   if(message != ""){//Check if message is empty
-	Serial.println(message);//Print message received
+	Serial.print(message);//Print message received
+	Serial.print("---> ");
+	Serial.print("RSSI = ");
+	Serial.println(radio.RSSI);
   }//end if
   Serial.flush();
 }//end loop

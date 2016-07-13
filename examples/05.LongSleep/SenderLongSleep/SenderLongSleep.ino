@@ -32,8 +32,13 @@
 */
 
 #include <SimpleRFM.h>
+#include <LowPower.h>   //https://github.com/rocketscream/Low-Power
 
-#define PUSH_BUTTON   5
+/*
+  Note from Low-power github site
+  External interrupt during standby on ATSAMD21G18A requires a patch to the Arduino SAMD Core
+  in order for it to work. Fix is provided by this particular pull request.
+*/
 
 #define NODE_ID 1 // each node in the network must have a unique nodeId (1-254)
 #define RECEIVER 2 // the other radio should have a nodeId of 2
@@ -42,26 +47,43 @@
 
 SimpleRFM radio;         //SimpleRFM definition
 
-void setup() {
-  pinMode(PUSH_BUTTON, INPUT_PULLUP);//Use a push button on pin 5
+uint8_t t_wait = 1;       //Total time to sleep T_WAIT*8 [8 because you sleep maximum 8s]
+uint8_t n_times = 0;      //Counter to wait time
 
-  radio.begin(NODE_ID, NETWORK, ENCRYPT_KEY);
+void setup() {
 
   Serial.begin(9600);
+
+  radio.begin(NODE_ID, NETWORK, ENCRYPT_KEY);
 }//end setup
 
 void loop() {
-  if(digitaRead(PUSH_BUTTON) == HIGH){
-	message = "LED ON";
+  if(n_times >= t_wait){
+	String message;
+	//-----Your code here---->
+	String title = "Multiple_readings";
+	int read1 = digitalRead(12);
+	float read2 = analogRead(A0);
+	int read3 = random(100);
+
+	//Send them as one message
+	message = title +" "+ String(read1) +" "+ String(read2) +" "+ String(read3);
+
+	if(radio.send(RECEIVER, message)){
+	  Serial.println("Packet delivered!");
+	}else{
+	  Serial.println("Packet not receive");
+	}//end if
+	//-----------------------<
+    n_times = 0;//Back to start
   }else{
-	message = "LED OFF";
+    n_times++;//wait more
   }//end if
-  //Parameter to send messages
-  //server ID, message, length, maximum retries, maximum retrie wait time
-  if(radio.send(RECEIVER, message)){
-	Serial.println(F("Packet delivered!"));
-  }else{
-	Serial.println(F("Packet not receive"));
-  }//end if
-  delay(1000);
+  /*You can use
+	SLEEP_15MS, SLEEP_30MS, SLEEP_60MS, SLEEP_120MS, SLEEP_250MS, SLEEP_500MS,
+	SLEEP_1S, SLEEP_2S, SLEEP_4S, SLEEP_8S, SLEEP_FOREVER
+	See more examples if how use LowPower library
+   */
+  radio.sleep();
+  LowPower.powerDown(SLEEP_8S, ADC_OFF, BOD_OFF);
 }//loop

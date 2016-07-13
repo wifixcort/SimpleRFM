@@ -1,8 +1,11 @@
 /*
- Standart Gateway Trasmition
+ Simple transmit example
 
+ Bentley Born
+ bentley@crcibernetica.com
  Ricardo Mena C
  ricardo@crcibernetica.com
+
  http://crcibernetica.com
 
  License
@@ -33,24 +36,26 @@
 
 #include <SimpleRFM.h>
 
-#define NODE_ID 2 // each node in the network must have a unique nodeId (1-254)
+#define NODE_ID 1 // each node in the network must have a unique nodeId (1-254)
+#define RECEIVER 2 // the other radio should have a nodeId of 2
 #define NETWORK 100 // all nodes need to have the same network (1-254)
 #define ENCRYPT_KEY "sampleEncryptKey" // 16 characters, all nodes need to have the same encryptKey
 
-SimpleRFM radio;
+SimpleRFM radio;         //SimpleRFM definition
 
 void setup() {
 
-  radio.begin(NODE_ID, NETWORK, ENCRYPT_KEY);
+  Serial.begin(9600);  
 
-  Serial.begin(9600);
+  radio.begin(NODE_ID, NETWORK, ENCRYPT_KEY);
 }//end setup
 
-void loop(){
-  String message;
-  radio.receive(message);
-  if(message != ""){//Check if message is empty
-	Serial.println(message);//Print message received
+void loop() {
+  String message = "Hello";
+  if(radio.send(RECEIVER, message)){
+	Serial.println("Packet delivered");
+  }else{
+	Serial.println("Packet not delivered");
   }//end if
-  Serial.flush();
-}//end loop
+  delay(1000);
+}//loop
