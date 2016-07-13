@@ -1,10 +1,12 @@
 #SimpleRFM
 
-The purpose of this library is to simplify the use of HopeRF RFM69 radios for new users. 
+The purpose of this library is to simplify the use of HopeRF RFM69 radios.
 
 This library uses the RFM69 library created by [LowPowerLabs](https://github.com/LowPowerLab/RFM69)
+
 Many radio libraries use char arrays and/or c strings which can be overly complex for many beginner programmers.
-This library only sends an Arduino String object.
+This library only uses an [Arduino String](https://www.arduino.cc/en/Reference/StringObject) object. 
+The high level String function can make simple work of constructing and parsing transmitted data.
 
 ##Functions
 
@@ -13,7 +15,9 @@ This library only sends an Arduino String object.
 Send an Arduino String object to a specified node. The maximum size of the String is 61 bytes.
 
 ####Usage
+```c++
 boolean send(int nodeId, String message) //returns true if transmission successful
+```
 
 Example
 ```c++
@@ -49,7 +53,9 @@ void loop() {
 Receives an Arduino String from a remote radio.
 
 ####Usage
-receive(String message) // received String
+```
+void receive(String message) // received String
+```
 
 Example
 ```c++
