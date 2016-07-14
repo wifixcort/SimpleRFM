@@ -71,7 +71,6 @@
 
 class SimpleRFM: public RFM69{
  private:
-
    uint8_t node_id_receive;
    void alert(uint8_t t_delay);
  public:

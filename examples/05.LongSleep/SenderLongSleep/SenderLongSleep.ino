@@ -26,7 +26,7 @@ void setup() {
 
 void loop() {
   if(n_times >= t_wait){
-	String message = "Hello";
+	   String message = "Hello";
   	if(radio.send(RECEIVER, message)){
   	  Serial.println("Packet delivered!");
   	}else{

@@ -10,8 +10,11 @@
 # Methods and Functions (KEYWORD2)
 #######################################
 
+begin		KEYWORD2
 receive		KEYWORD2
 send		KEYWORD2
+id_receive  KEYWORD2
+split		KEYWORD2
 
 #######################################
 # Instances (KEYWORD2)

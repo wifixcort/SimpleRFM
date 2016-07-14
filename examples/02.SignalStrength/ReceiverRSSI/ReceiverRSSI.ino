@@ -22,5 +22,4 @@ void loop(){
   	Serial.print("RSSI = ");
   	Serial.println(radio.RSSI);
   }//end if
-  Serial.flush();
 }//end loop

@@ -45,9 +45,9 @@ SimpleRFM::SimpleRFM(uint8_t slaveSelectPin, uint8_t interruptPin, bool isRFM69H
 
 bool SimpleRFM::begin(uint8_t node_Id, uint8_t netw_id, const char *encryptK, boolean mote_type, uint8_t frequency){
   bool radio = this->initialize(frequency, node_Id, netw_id);
-  //  if(mote_type){//is this a high power SimpleRFM?
-    this->setHighPower(mote_type);
-	//  }//end if
+  if(mote_type){//is this a high power SimpleRFM?
+    this->setHighPower();
+  }//end if
   this->encrypt(encryptK);//(const char*)
   return radio;
 }//end initialize
@@ -61,13 +61,13 @@ boolean SimpleRFM::receive(String &msg){
   if (this->receiveDone()){
 	  node_id_receive = this->SENDERID;//Save node id
 	  for(uint8_t i = 0; i < this->DATALEN; i++){
-	  msg += (char)this->DATA[i];//This is the data
-	}//end for
-	if (this->ACKRequested()){
-	  this->sendACK();
-	}//end if
-	alert(3);
-	return true;
+	     msg += (char)this->DATA[i];//This is the data
+  	}//end for
+  	if (this->ACKRequested()){
+  	  this->sendACK();
+  	}//end if
+  	alert(3);
+  	return true;
   }//end if
   return false;
 }//end receive
@@ -75,10 +75,10 @@ boolean SimpleRFM::receive(String &msg){
 boolean SimpleRFM::send(uint8_t gateway, String s_buffer, uint8_t retryWaitTime, uint8_t retries){//retrines default 2, retriesWait default 40
 
   if (this->sendWithRetry(gateway, s_buffer.c_str(), s_buffer.length(), retries, retryWaitTime)){
-	alert(3);
-	return true;//ok!
+  	alert(3);
+  	return true;//ok!
   }else{
-	return false;//nothing!
+	   return false;//nothing!
   }//end if
 }//end send
 
