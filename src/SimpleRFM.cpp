@@ -34,21 +34,21 @@
 #include "SimpleRFM.h"
 
 SimpleRFM::SimpleRFM(uint8_t slaveSelectPin, uint8_t interruptPin, bool isRFM69HW, uint8_t interruptNum){
-  RFM69::_slaveSelectPin = slaveSelectPin;
-  RFM69::_interruptPin = interruptPin;
-  RFM69::_interruptNum = interruptNum;
-  RFM69::_mode = RF69_MODE_STANDBY;
-  RFM69::_promiscuousMode = false;
-  RFM69::_powerLevel = 31;
-  RFM69::_isRFM69HW = isRFM69HW;
+  this->_slaveSelectPin = slaveSelectPin;
+  this->_interruptPin = interruptPin;
+  this->_interruptNum = interruptNum;
+  this->_mode = RF69_MODE_STANDBY;
+  this->_promiscuousMode = false;
+  this->_powerLevel = 31;
+  this->_isRFM69HW = isRFM69HW;
 }//end SimpleRFM
 
 bool SimpleRFM::begin(uint8_t node_Id, uint8_t netw_id, const char *encryptK, boolean mote_type, uint8_t frequency){
-  bool radio = RFM69::initialize(frequency, node_Id, netw_id);
-  if(mote_type){//is this a high power SimpleRFM?
-    RFM69::setHighPower();
-  }//end if
-  RFM69::encrypt(encryptK);//(const char*)
+  bool radio = this->initialize(frequency, node_Id, netw_id);
+  //  if(mote_type){//is this a high power SimpleRFM?
+    this->setHighPower(mote_type);
+	//  }//end if
+  this->encrypt(encryptK);//(const char*)
   return radio;
 }//end initialize
 
@@ -58,13 +58,13 @@ SimpleRFM::~SimpleRFM(){
 
 boolean SimpleRFM::receive(String &msg){
   msg = "";//Delete old string
-  if (RFM69::receiveDone()){
-	  node_id_receive = RFM69::SENDERID;//Save node id
-	for(uint8_t i = 0; i < RFM69::DATALEN; i++){
-	  msg += (char)RFM69::DATA[i];//This is the data
+  if (this->receiveDone()){
+	  node_id_receive = this->SENDERID;//Save node id
+	  for(uint8_t i = 0; i < this->DATALEN; i++){
+	  msg += (char)this->DATA[i];//This is the data
 	}//end for
-	if (RFM69::ACKRequested()){
-	  RFM69::sendACK();
+	if (this->ACKRequested()){
+	  this->sendACK();
 	}//end if
 	alert(3);
 	return true;
@@ -74,7 +74,7 @@ boolean SimpleRFM::receive(String &msg){
 
 boolean SimpleRFM::send(uint8_t gateway, String s_buffer, uint8_t retryWaitTime, uint8_t retries){//retrines default 2, retriesWait default 40
 
-  if (RFM69::sendWithRetry(gateway, s_buffer.c_str(), s_buffer.length(), retries, retryWaitTime)){
+  if (this->sendWithRetry(gateway, s_buffer.c_str(), s_buffer.length(), retries, retryWaitTime)){
 	alert(3);
 	return true;//ok!
   }else{

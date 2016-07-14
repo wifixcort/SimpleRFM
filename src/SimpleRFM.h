@@ -44,7 +44,7 @@
 #if defined(__AVR_ATmega168__) || defined(__AVR_ATmega328P__) || defined(__AVR_ATmega88) || defined(__AVR_ATmega8__) || defined(__AVR_ATmega88__)
  #define RF69_IRQ_PIN          2
  #define RF69_IRQ_NUM          0
- #define LED           13   //Moteinos have LEDs on D9
+ #define LED           9   //Moteinos have LEDs on D9
  #define FLASH_SS      8  //and FLASH SS on D8
 #elif defined(__AVR_ATmega644P__) || defined(__AVR_ATmega1284P__)
  #define RF69_IRQ_PIN          2
