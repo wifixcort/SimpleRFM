@@ -44,7 +44,7 @@
 #if defined(__AVR_ATmega168__) || defined(__AVR_ATmega328P__) || defined(__AVR_ATmega88) || defined(__AVR_ATmega8__) || defined(__AVR_ATmega88__)
  #define RF69_IRQ_PIN          2
  #define RF69_IRQ_NUM          0
- #define LED           9   //Moteinos have LEDs on D9
+// #define LED           9   //Moteinos have LEDs on D9
  #define FLASH_SS      8  //and FLASH SS on D8
 #elif defined(__AVR_ATmega644P__) || defined(__AVR_ATmega1284P__)
  #define RF69_IRQ_PIN          2
@@ -55,24 +55,23 @@
 #elif defined(__arm__)
  #define RF69_IRQ_PIN          10
  #define RF69_IRQ_NUM          10
- #define LED           13  //Moteinos have LEDs on D9
-#define FLASH_SS      8    //and FLASH SS on D8
+// #define LED           13  //Moteinos have LEDs on D9
+//#define FLASH_SS      8    //and FLASH SS on D8
 #else
  #define RF69_IRQ_PIN          2
  #define RF69_IRQ_NUM          0
- #define LED           9  //Moteinos have LEDs on D9
+// #define LED           9  //Moteinos have LEDs on D9
  #define FLASH_SS      8  //and FLASH SS on D8
 #endif
 
 #ifdef __AVR_ATmega1284P__
-#define LED           15 // Moteino MEGAs have LEDs on D15
+//#define LED           15 // Moteino MEGAs have LEDs on D15
 #define FLASH_SS      23 // and FLASH SS on D23
 #endif
 
 class SimpleRFM: public RFM69{
  private:
    uint8_t node_id_receive;
-   void alert(uint8_t t_delay);
  public:
   //    SimpleRFM(){};//Empty constructor
   virtual ~SimpleRFM();
@@ -82,5 +81,7 @@ class SimpleRFM: public RFM69{
   boolean send(uint8_t gateway, String s_buffer, uint8_t retryWaitTime=200, uint8_t retries=2);// const void* buffe
   uint8_t id_receive();
   void split(String &message, String *sArray, int size, char separator);
+  void alert(uint8_t led, uint8_t t_delay = 3);
+  void reset(uint8_t pinReset = null);
 };
 #endif /* #ifndef __SimpleRFM_H__ */

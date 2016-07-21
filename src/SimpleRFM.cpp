@@ -66,7 +66,7 @@ boolean SimpleRFM::receive(String &msg){
   	if (this->ACKRequested()){
   	  this->sendACK();
   	}//end if
-  	alert(3);
+	//  	alert(3);
   	return true;
   }//end if
   return false;
@@ -75,7 +75,7 @@ boolean SimpleRFM::receive(String &msg){
 boolean SimpleRFM::send(uint8_t gateway, String s_buffer, uint8_t retryWaitTime, uint8_t retries){//retrines default 2, retriesWait default 40
 
   if (this->sendWithRetry(gateway, s_buffer.c_str(), s_buffer.length(), retries, retryWaitTime)){
-  	alert(3);
+	//  	alert(3);
   	return true;//ok!
   }else{
 	   return false;//nothing!
@@ -103,9 +103,19 @@ void SimpleRFM::split(String &message, String *sArray, int size, char separator)
   }//end for
 }
 
-void SimpleRFM::alert(uint8_t t_delay){
-  pinMode(LED, OUTPUT);
-  digitalWrite(LED,HIGH);
+void SimpleRFM::alert(uint8_t led, uint8_t t_delay){
+  pinMode(led, OUTPUT);
+  digitalWrite(led,HIGH);
   delay(t_delay);
-  digitalWrite(LED,LOW);
-}//end alert_incomming
+  digitalWrite(led,LOW);
+}//end alert
+
+void SimpleRFM::reset(uint8_t pinReset){
+  if(pinReset != null){
+	pinMode(pinReset, OUTPUT);
+	digitalWrite(pinReset, HIGH);
+	delay(100);
+	digitalWrite(pinReset, LOW);
+	delay(100);  
+  }//end if
+}//end reset
