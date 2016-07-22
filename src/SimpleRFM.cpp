@@ -40,10 +40,15 @@ SimpleRFM::SimpleRFM(uint8_t slaveSelectPin, uint8_t interruptPin, bool isRFM69H
   this->_mode = RF69_MODE_STANDBY;
   this->_promiscuousMode = false;
   this->_powerLevel = 31;
-  this->_isRFM69HW = isRFM69HW;
+  #ifndef IS_RFM69HCW
+   this->_isRFM69HW = isRFM69HW;
+  #else
+  this->_isRFM69HW = IS_RFM69HCW;
+  #endif
 }//end SimpleRFM
 
 bool SimpleRFM::begin(uint8_t node_Id, uint8_t netw_id, const char *encryptK, boolean mote_type, uint8_t frequency){
+  this->reset();
   bool radio = this->initialize(frequency, node_Id, netw_id);
   if(mote_type){//is this a high power SimpleRFM?
     this->setHighPower();
@@ -111,11 +116,9 @@ void SimpleRFM::alert(uint8_t led, uint8_t t_delay){
 }//end alert
 
 void SimpleRFM::reset(uint8_t pinReset){
-  if(pinReset != null){
-	pinMode(pinReset, OUTPUT);
-	digitalWrite(pinReset, HIGH);
-	delay(100);
-	digitalWrite(pinReset, LOW);
-	delay(100);  
-  }//end if
+  pinMode(pinReset, OUTPUT);
+  digitalWrite(pinReset, HIGH);
+  delay(100);
+  digitalWrite(pinReset, LOW);
+  delay(100);  
 }//end reset

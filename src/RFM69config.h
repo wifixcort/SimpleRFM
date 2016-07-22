@@ -34,8 +34,8 @@
 #ifndef __RFM69_CONF_H__
 #define __RFM69_CONF_H__
 
-#define BPS_1200
-//#define BPS_19200
+//#define BPS_1200
+#define BPS_19200
 //#define BPS_55555
 
 #endif

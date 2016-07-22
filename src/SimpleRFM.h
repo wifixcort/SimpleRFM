@@ -39,12 +39,11 @@
 #include "RFM69config.h"
 #include <SPI.h>
 
-#define RF69_SPI_CS             SS
+#define RFM69_RST     9
 
 #if defined(__AVR_ATmega168__) || defined(__AVR_ATmega328P__) || defined(__AVR_ATmega88) || defined(__AVR_ATmega8__) || defined(__AVR_ATmega88__)
  #define RF69_IRQ_PIN          2
  #define RF69_IRQ_NUM          0
-// #define LED           9   //Moteinos have LEDs on D9
  #define FLASH_SS      8  //and FLASH SS on D8
 #elif defined(__AVR_ATmega644P__) || defined(__AVR_ATmega1284P__)
  #define RF69_IRQ_PIN          2
@@ -53,19 +52,22 @@
  #define RF69_IRQ_PIN          3
  #define RF69_IRQ_NUM          0
 #elif defined(__arm__)
- #define RF69_IRQ_PIN          10
- #define RF69_IRQ_NUM          10
-// #define LED           13  //Moteinos have LEDs on D9
-//#define FLASH_SS      8    //and FLASH SS on D8
+ //* for Feather M0
+ #define RF69_SPI_CS      8
+ #define RF69_IRQ_PIN     3
+ #define RF69_IRQ_NUM    3  // Pin 3 is IRQ 3!
+ #define IS_RFM69HCW   true // set to 'true' if you are using an RFM69HCW module
 #else
  #define RF69_IRQ_PIN          2
  #define RF69_IRQ_NUM          0
-// #define LED           9  //Moteinos have LEDs on D9
  #define FLASH_SS      8  //and FLASH SS on D8
 #endif
 
+#ifndef RF69_SPI_CS
+ #define RF69_SPI_CS             SS
+#endif
+
 #ifdef __AVR_ATmega1284P__
-//#define LED           15 // Moteino MEGAs have LEDs on D15
 #define FLASH_SS      23 // and FLASH SS on D23
 #endif
 
@@ -82,6 +84,6 @@ class SimpleRFM: public RFM69{
   uint8_t id_receive();
   void split(String &message, String *sArray, int size, char separator);
   void alert(uint8_t led, uint8_t t_delay = 3);
-  void reset(uint8_t pinReset = null);
+  void reset(uint8_t pinReset = RFM69_RST);
 };
 #endif /* #ifndef __SimpleRFM_H__ */
