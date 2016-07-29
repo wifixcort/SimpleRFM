@@ -4,7 +4,9 @@
 #define NETWORK 100 // all nodes need to have the same network (0-255)
 #define ENCRYPT_KEY "sampleEncryptKey" // 16 characters, all nodes need to have the same encryptKey
 
-SimpleRFM radio;
+#define LED 13
+
+SimpleRFM radio;  //SimpleRFM definition
 
 void setup() {
 
@@ -22,4 +24,5 @@ void loop(){
   	Serial.print("RSSI = ");
   	Serial.println(radio.RSSI);
   }//end if
+  Serial.flush();
 }//end loop

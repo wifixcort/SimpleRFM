@@ -5,7 +5,9 @@
 #define NETWORK 100 // all nodes need to have the same network (0-255)
 #define ENCRYPT_KEY "sampleEncryptKey" // 16 characters, all nodes need to have the same encryptKey
 
-SimpleRFM radio;         //SimpleRFM definition
+#define LED 8
+
+SimpleRFM radio;  //SimpleRFM definition
 
 void setup() {
 
@@ -17,9 +19,12 @@ void setup() {
 void loop() {
   String message = "Hello";
   if(radio.send(RECEIVER, message)){
-	   Serial.println("Packet delivered!");
+    radio.alert(LED);
+    Serial.print("Packet delivered! RSSI = ");
+    Serial.println(radio.RSSI);
   }else{
-	   Serial.println("Packet not receive");
+    Serial.println("Packet not delivered!");
   }//end if
+  Serial.flush();
   delay(1000);
 }//loop

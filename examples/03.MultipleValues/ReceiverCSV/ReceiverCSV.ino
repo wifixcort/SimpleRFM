@@ -4,7 +4,9 @@
 #define NETWORK 100 // all nodes need to have the same network (1-254)
 #define ENCRYPTKEY "sampleEncryptKey" // 16 characters, all nodes need to have the same encryptKey
 
-SimpleRFM radio;
+#define LED 13
+
+SimpleRFM radio;  //SimpleRFM definition
 
 void setup() {
 
@@ -22,6 +24,7 @@ void loop() {
   radio.receive(message); // check radio for new messages
 
   if (message != "") {
+    radio.alert(LED);
     radio.split(message, values, 4, ','); // a helper function to split the message into values[]
 
     String timestamp = values[0];
@@ -34,5 +37,6 @@ void loop() {
     Serial.println(sensor2);
     Serial.println(sensor3);
   }//end if
+  Serial.flush();
   delay(1000);
 }//loop

@@ -37,34 +37,38 @@
 #include <Arduino.h>
 #include "RFM69.h"    //https://www.github.com/lowpowerlab/rfm69
 #include "RFM69config.h"
+
 #include <SPI.h>
 
-#define RFM69_RST     9
-
-#if defined(__AVR_ATmega168__) || defined(__AVR_ATmega328P__) || defined(__AVR_ATmega88) || defined(__AVR_ATmega8__) || defined(__AVR_ATmega88__)
- #define RF69_IRQ_PIN          2
- #define RF69_IRQ_NUM          0
- #define FLASH_SS      8  //and FLASH SS on D8
-#elif defined(__AVR_ATmega644P__) || defined(__AVR_ATmega1284P__)
- #define RF69_IRQ_PIN          2
- #define RF69_IRQ_NUM          2
- #elif defined(__AVR_ATmega32U4__)
- #define RF69_IRQ_PIN          3
- #define RF69_IRQ_NUM          0
-#elif defined(__arm__)
- //* for Feather M0
- #define RF69_SPI_CS      8
- #define RF69_IRQ_PIN     3
- #define RF69_IRQ_NUM    3  // Pin 3 is IRQ 3!
- #define IS_RFM69HCW   true // set to 'true' if you are using an RFM69HCW module
+#if defined(__arm__)
+#define RFM69_RST     4
 #else
- #define RF69_IRQ_PIN          2
- #define RF69_IRQ_NUM          0
- #define FLASH_SS      8  //and FLASH SS on D8
+#define RFM69_RST     9
 #endif
 
-#ifndef RF69_SPI_CS
- #define RF69_SPI_CS             SS
+#if defined(__AVR_ATmega168__) || defined(__AVR_ATmega328P__) || defined(__AVR_ATmega88) || defined(__AVR_ATmega8__) || defined(__AVR_ATmega88__)
+ #define RFM69_IRQ_PIN          2
+ #define RFM69_IRQ_NUM          0
+ #define FLASH_SS      8  //and FLASH SS on D8
+#elif defined(__AVR_ATmega644P__) || defined(__AVR_ATmega1284P__)
+ #define RFM69_IRQ_PIN          2
+ #define RF69_IRQ_NUM          2
+ #elif defined(__AVR_ATmega32U4__)
+ #define RFM69_IRQ_PIN          3
+ #define RFM69_IRQ_NUM          0
+#elif defined(__arm__)
+ // for Feather M0
+ #define RFM69_SPI_CS      8
+ #define RFM69_IRQ_PIN     3
+ #define RFM69_IRQ_NUM    3  // Pin 3 is IRQ 3!
+ #define IS_RFM69HCW   true // set to 'true' if you are using an RFM69HCW module
+#else
+ #define RFM69_IRQ_PIN          2
+ #define RFM69_IRQ_NUM          0
+#endif
+
+#ifndef RFM69_SPI_CS
+ #define RFM69_SPI_CS             SS
 #endif
 
 #ifdef __AVR_ATmega1284P__
@@ -77,7 +81,7 @@ class SimpleRFM: public RFM69{
  public:
   //    SimpleRFM(){};//Empty constructor
   virtual ~SimpleRFM();
-  SimpleRFM(uint8_t slaveSelectPin=RF69_SPI_CS, uint8_t interruptPin=RF69_IRQ_PIN, bool isRFM69HW=false, uint8_t interruptNum=RF69_IRQ_NUM);
+  SimpleRFM(uint8_t slaveSelectPin=RFM69_SPI_CS, uint8_t interruptPin=RFM69_IRQ_PIN, bool isRFM69HW=false, uint8_t interruptNum=RFM69_IRQ_NUM);
   bool begin(uint8_t node_Id, uint8_t netw_id = 100, const char *encryptK = "sampleEncryptKey", boolean mote_type=false, uint8_t frequency = RF69_915MHZ);
   boolean receive(String &msg);
   boolean send(uint8_t gateway, String s_buffer, uint8_t retryWaitTime=200, uint8_t retries=2);// const void* buffe

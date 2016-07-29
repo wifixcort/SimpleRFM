@@ -22,4 +22,5 @@ void loop(){
     radio.alert(LED);
     Serial.println(message);
   }//end if
+  Serial.flush();
 }//end loop

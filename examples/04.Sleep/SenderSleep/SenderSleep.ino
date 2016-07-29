@@ -12,7 +12,9 @@
 #define NETWORK 100 // all nodes need to have the same network (1-254)
 #define ENCRYPT_KEY "sampleEncryptKey" // 16 characters, all nodes need to have the same encryptKey
 
-SimpleRFM radio;         //SimpleRFM definition
+#define LED 8
+
+SimpleRFM radio;  //SimpleRFM definition
 
 void setup() {
 
@@ -24,15 +26,17 @@ void setup() {
 void loop() {
   String message = "Hello";
   if(radio.send(RECEIVER, message)){
-	   Serial.println("Packet delivered!");
+    radio.alert(LED);
+    Serial.println("Packet delivered!");
   }else{
-	   Serial.println("Packet not receive");
+    Serial.println("Packet not delivered!");
   }//end if
   /*You can use
 	SLEEP_15MS, SLEEP_30MS, SLEEP_60MS, SLEEP_120MS, SLEEP_250MS, SLEEP_500MS,
 	SLEEP_1S, SLEEP_2S, SLEEP_4S, SLEEP_8S, SLEEP_FOREVER
 	See more examples if how use LowPower library
    */
+  Serial.flush();
   radio.sleep();
   LowPower.powerDown(SLEEP_8S, ADC_OFF, BOD_OFF);
 }//loop
